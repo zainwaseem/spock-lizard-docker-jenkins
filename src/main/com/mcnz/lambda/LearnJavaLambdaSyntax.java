@@ -24,13 +24,13 @@ public class LearnJavaLambdaSyntax {
 		sa4.foo("will not print with whitespace.\n");
 		
 		MultipleArguments ma1 = (String p, int x) -> {
-			   System.out.printf("%s1 wants %s2 slices of pie.\n", p, x);
+			   System.out.printf("%s wants %s slices of pie.\n", p, x);
 		};
 		ma1.bar("Cameron ", 3);
 		ma1.bar("Callie", 4);
 		
 		MultipleArguments ma2 = 
-				( p, x ) -> System.out.printf ( "%s1 wants %s2 slices.\n", p, x );
+				( p, x ) -> System.out.printf ( "%s wants %s slices.\n", p, x );
 		ma2.bar("Brandyn", 1);
 		ma2.bar("Carter", 2);
 	
