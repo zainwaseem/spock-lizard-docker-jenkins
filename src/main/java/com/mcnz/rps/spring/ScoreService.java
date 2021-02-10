@@ -3,7 +3,7 @@ package com.mcnz.rps.spring;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -66,6 +66,22 @@ public class ScoreService {
 		//System.out.println(score.getId());;
 		//scoreRepository.save(score);
 		return true;
+	}
+	
+	@GetMapping("/increasewins")
+	public Score increaseTheWins() {
+		score.wins++;
+		return score;
+	}
+	@GetMapping("/increaselosses")
+	public Score increaseTheLosses() {
+		score.losses++;
+		return score;
+	}
+	@GetMapping("/increaseties")
+	public Score increaseTheTies() {
+		score.ties++;
+		return score;
 	}
 
 }

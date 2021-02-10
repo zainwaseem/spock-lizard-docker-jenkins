@@ -14,7 +14,7 @@ public class Score {
 	public void setId(long id) {
 		this.id = id;
 	}
-	private int wins, losses, ties;
+	public int wins, losses, ties;
 	
 	public void increaseWins(){
 		System.out.println("Increasing wins in the bean");;
