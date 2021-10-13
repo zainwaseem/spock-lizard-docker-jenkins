@@ -6,8 +6,8 @@ pipeline {
         stage('Log Tool Version') {
           steps {
             sh '''mvn --version
-git --version
-java -version'''
+            git --version
+            java -version'''
           }
         }
 
