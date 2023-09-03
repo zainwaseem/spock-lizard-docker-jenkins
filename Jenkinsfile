@@ -38,11 +38,7 @@ pipeline {
       }
     }
 
-    stage('Build Executable JAR File') {
-      steps {
-        build job: static-code-analysis
-      }
-    }    
+  
 
     stage('Build Docker Image') {
       steps {
@@ -50,26 +46,42 @@ pipeline {
       }
     }
 
+    stage('Create Executable JAR File') {
+      steps {
+        bat 'mvn package spring-boot:repackage'
+      }
+    }  
+
+    stage('Build Docker IMage') {
+      steps {
+        bat 'sudo docker build -t cameronmcnz/cams-rps-service .'
+      }
+    }   
+
     stage('Software Versions') {
             steps {
-                script {
-                    def response = input message: 'Should we print the software  version?', 
+                        docker push cameronmcnz90210/cams-rps-service:first
+                    
+                }
+            }
+        }
+
+    stage('Deploy to AWS') {
+      steps {
+            script {
+                    def response = input message: 'Should we push to DockerHub?', 
                     parameters: [choice(choices: 'Yes\nNo', 
                     description: 'Proceed or Abort?', 
                     name: 'What to do???')]
                     
                     if (response=="Yes") {
-                        bat 'mvn --version'
-                        bat 'gradle --version'
-                        bat 'git --version'
+                        bat 'aws ecs update-service --cluster rps-cluster --service rps-service --force-new-deployment'
+                    }
+                    if (response=="No") {
+                         writeFile(file: 'deployment.txt', text: 'We did not deploy.')
                     }
                 }
-            }
-        }
-
-    stage('Post Build Steps') {
-      steps {
-        writeFile(file: 'status.txt', text: 'Hey it worked!!!')
+       
       }
     }
 
